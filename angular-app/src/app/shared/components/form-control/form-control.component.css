@@ -1,0 +1,37 @@
+.inputfield {
+    padding-bottom: 1.5em;
+}
+.inputfield-label {
+    color: #757575;
+}
+
+.inputfield .ui-message {
+    font-size: 13px;
+    border: none;
+    padding-left: 0;
+    color: #e62a10;
+    position: absolute;
+}
+
+.inputfield p-dropdown{
+    height: 20px;
+    margin-top: -2px;
+}
+
+.inputfield input[readonly]{
+    background: #cacaca ;
+    color: #7f7f7f;
+}
+.inputfield input[readonly]:focus,
+.inputfield input[readonly]:active{
+    border-bottom-color: #7f7f7f !important;
+}
+
+.inputfield .p-message-error{
+    background: none;
+}
+
+.form-label{
+    text-align: right; 
+    align-self: center;
+}

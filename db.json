@@ -1,0 +1,46 @@
+{
+  "posts": [
+    {
+      "accountHolder": "Yubaraj Shrestha edited",
+      "iban": "DE12 5001 0517 0648 4898 90",
+      "date": "2022-03-24",
+      "amount": "3000",
+      "note": "This is for Testing Purpose ed",
+      "id": 1
+    },
+    {
+      "accountHolder": "rest",
+      "iban": "test",
+      "date": null,
+      "amount": "2122",
+      "note": null,
+      "id": 2
+    },
+    {
+      "accountHolder": "test",
+      "iban": "te",
+      "date": "",
+      "amount": "teat",
+      "note": null,
+      "id": 3
+    },
+    {
+      "accountHolder": "arsra",
+      "iban": "rearaesra",
+      "date": null,
+      "amount": "324234",
+      "note": null,
+      "id": 4
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}

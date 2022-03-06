@@ -1,0 +1,219 @@
+<nav class="navbar navbar-light bg-primary">
+  <div class="container-fluid">
+    <h1 style="color: aliceblue">User CRUD Operation</h1>
+  </div>
+</nav>
+
+<div style="float: right; margin-top: 10px; margin-right: 10px">
+  <button
+    type="button"
+    class="btn btn-success"
+    data-bs-toggle="modal"
+    data-bs-target="#staticBackdrop"
+  >
+    Create
+  </button>
+</div>
+<div style="padding: 20px">
+  <table class="table mt-3">
+    <thead>
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col" style="width: 20%">Account Holder</th>
+        <th scope="col" style="width: 15%">IBAN</th>
+        <th scope="col" style="width: 15%">date</th>
+        <th scope="col" style="width: 10%">Amount</th>
+        <th scope="col" style="width: 25%">Note</th>
+        <th scope="col" style="width: 14em; text-align: center">Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let row of userList">
+        <td>{{ row.id }}</td>
+        <td>{{ row.accountHolder }}</td>
+        <td>{{ row.iban }}</td>
+        <td>{{ row.date }}</td>
+        <td>&euro;{{ row.amount }}</td>
+        <td>{{ row.note }}</td>
+        <td style="text-align: center">
+          <button
+            class="btn btn-info"
+            class="btn btn-primary"
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+            (click)="OnClickEdit(row)"
+          >
+            Edit
+          </button>
+          <button class="btn btn-danger mx-3" (click)="DeleteUser(row)">
+            Delete
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="staticBackdrop"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title" id="staticBackdropLabel">Client Details</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="ParentForm" (ngSubmit)="Save()">
+          <div class="mb-3">
+            <label for="accountHolder" class="form-label"
+              >*Account Holder</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              formControlName="accountHolder"
+              id="accountHolder"
+            />
+            <div
+              *ngIf="f['accountHolder'].touched && f['accountHolder'].invalid"
+              class="alert alert-danger"
+            >
+              <div
+                *ngIf="
+                  f['accountHolder'].errors &&
+                  f['accountHolder'].errors['required']
+                "
+              >
+                Account Holder is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="iban" class="form-label">*IBAN</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="iban"
+              id="iban"
+            />
+            <!-- <div
+              *ngIf="f['iban'].touched && f['iban'].invalid"
+              class="alert alert-danger"
+            >
+              <div *ngIf="f['iban'].errors && f['iban'].errors['required']">
+                IBAN is required.
+              </div>
+            </div> -->
+          </div>
+
+          <div class="mb-3">
+            <label for="iban" class="col-sm-2 col-form-label">*IBAN 2:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="iban"
+              name="iban"
+              formControlName="iban"
+              required
+            />
+          </div>
+
+          <div
+            *ngIf="f['iban'].invalid && (f['iban'].dirty || f['iban'].touched)"
+            class="alert alert-danger"
+          >
+            <div
+              *ngIf="f['iban'].valid && (f['iban'].dirty || f['iban'].touched)"
+              class="alert alert-danger"
+            >
+              IBAN is valid.
+            </div>
+            <div *ngIf="f['iban'].errors && f['iban'].errors['required']">
+              IBAN is required.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="date" class="form-label">*Date</label>
+            <input
+              type="date"
+              class="form-control"
+              formControlName="date"
+              id="date"
+            />
+            <div
+              *ngIf="f['date'].touched && f['date'].invalid"
+              class="alert alert-danger"
+            >
+              <div *ngIf="f['date'].errors && f['date'].errors['required']">
+                date is required.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="amount" class="form-label">*Amount</label>
+            <div class="input-group mb-3">
+              <span class="input-group-text">&euro;</span>
+              <input
+                type="text"
+                class="form-control"
+                formControlName="amount"
+                aria-label="Amount (to the nearest euro)"
+              />
+              <span class="input-group-text">.00</span>
+              <div
+                *ngIf="f['amount'].touched && f['amount'].invalid"
+                class="alert alert-danger"
+              >
+                <div
+                  *ngIf="f['amount'].errors && f['amount'].errors['required']"
+                >
+                  Amount is required.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="note" class="form-label">Note</label>
+            <input
+              type="string"
+              class="form-control"
+              formControlName="note"
+              id="note"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          id="cancel"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          (click)="OnClickCancel()"
+        >
+          Cancel
+        </button>
+        <button type="submit" class="btn btn-primary" (click)="Save()">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+<div class="inputfield">
+  <div class="p-field p-grid">
+    <!-- LABEL -->
+    <div class="p-col-12 p-md-{{ labelSize || 2 }} form-label">
+      <label for="label">
+        {{ required || isRequired ? "*" : "" }} {{ label }}
+        <span *ngIf="hint" tooltipPosition="bottom">
+          <i class="pi pi-info-circle"></i
+        ></span>
+      </label>
+    </div>
+    <!-- INPUT FIELD -->
+    <div class="p-col-12 p-md-{{ size || 4 }}">
+      <ng-content></ng-content>
+    </div>
+    <!-- MESSAGE -->
+    <div class="p-col-12 p-md-{{ 12 - (size || 4) - (labelSize || 2) }}">
+      <div
+        *ngIf="
+          control &&
+          control.invalid &&
+          (control.dirty || control.touched || control.root?.submitting)
+        "
+        class="p-message p-message-error"
+      >
+        <div *ngIf="control.errors.required">{{ label }} is required.</div>
+        <div *ngIf="control.errors.list">Select item from the list.</div>
+        <div *ngIf="control.errors.email">{{ label }} has invalid format.</div>
+        <div *ngIf="control.errors.pattern">
+          {{ label }} has invalid characters.
+        </div>
+        <div *ngIf="control.errors.maxlength">
+          {{ label }} must be less then
+          {{ validators().maxlength?.requiredLength }} characters long.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

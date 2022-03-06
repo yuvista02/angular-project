@@ -1,0 +1,32 @@
+{
+  "posts": [
+    {
+      "id": 1,
+      "accountHolder": "Yubraj Shrstha",
+      "iban": "23424234",
+      "date": "2022-03-11",
+      "amount": "4324",
+      "note": "12134234234sdfafdfasdf"
+    },
+    {
+      "accountHolder": "sa",
+      "iban": "dasd",
+      "date": "2022-03-11",
+      "amount": "fdasf",
+      "note": "fsdfdfsfsdf",
+      "id": 2
+    },
+    {
+      "accountHolder": "test",
+      "iban": "test",
+      "date": "2022-03-03",
+      "amount": "5000",
+      "note": null,
+      "id": 3
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}

@@ -1,0 +1,11 @@
+Pre-requisited
+1. Download and install latest Node js
+2. Download vscode
+
+Creating Angular Project
+1. install angular: npm install -g @angular/cli
+2. fake json server: npm install -g json-server
+3. go the folder you want to create project, then open cmd from there
+4. cmd to create project : ng new project-name
+5. Open project from vs code
+6. bootstrap setup
