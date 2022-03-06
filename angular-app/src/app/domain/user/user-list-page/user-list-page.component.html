@@ -4,38 +4,56 @@
   </div>
 </nav>
 
-<div style="float: right; margin-top: 10px; margin-right: 10px">
+<div style="float: right; margin: 28px 10px 0px 10px">
   <button
     type="button"
     class="btn btn-success"
     data-bs-toggle="modal"
     data-bs-target="#staticBackdrop"
+    (click)="OnClickCreate()"
   >
     Create
   </button>
 </div>
 <div style="padding: 20px">
-  <table class="table mt-3">
+  <nav class="navbar" style="width: 28em; float: right">
+    <input
+      class="form-control"
+      type="text"
+      name="searchFieldTextValue"
+      [(ngModel)]="searchFieldTextValue"
+      (ngModelChange)="Search()"
+      placeholder="Search Account Holder"
+    />
+  </nav>
+
+  <table class="table table-striped mt-3">
     <thead>
       <tr>
-        <th scope="col">ID</th>
+        <th scope="col" (click)="OnClickSort('id')">
+          ID&nbsp;<i class="fa fa-sort"></i>
+        </th>
         <th scope="col" style="width: 20%">Account Holder</th>
         <th scope="col" style="width: 15%">IBAN</th>
-        <th scope="col" style="width: 15%">date</th>
-        <th scope="col" style="width: 10%">Amount</th>
+        <th scope="col" style="width: 15%" (click)="OnClickSort('date')">
+          Date &nbsp;<i class="fa fa-sort"></i>
+        </th>
+        <th scope="col" style="width: 10%" (click)="OnClickSort('amount')">
+          Amount&nbsp;<i class="fa fa-sort"></i>
+        </th>
         <th scope="col" style="width: 25%">Note</th>
         <th scope="col" style="width: 14em; text-align: center">Actions</th>
       </tr>
     </thead>
 
     <tbody>
-      <tr *ngFor="let row of userList">
+      <tr *ngFor="let row of userList | orderBy: filterKey:reverse">
         <td>{{ row.id }}</td>
         <td>{{ row.accountHolder }}</td>
-        <td>{{ row.iban }}</td>
+        <td>{{ row.iban | ibanFormatter }}</td>
         <td>{{ row.date }}</td>
-        <td>&euro;{{ row.amount }}</td>
-        <td>{{ row.note }}</td>
+        <td>{{ row.amount | currency: "EUR" }}</td>
+        <td [innerText]="row.note"></td>
         <td style="text-align: center">
           <button
             class="btn btn-info"
@@ -79,50 +97,17 @@
       <div class="modal-body">
         <form [formGroup]="ParentForm" (ngSubmit)="Save()">
           <div class="mb-3">
-            <label for="accountHolder" class="form-label"
-              >*Account Holder</label
-            >
+            <label for="accountHolder" class="form-label">Account Holder</label>
             <input
               type="text"
               class="form-control"
               formControlName="accountHolder"
               id="accountHolder"
             />
-            <div
-              *ngIf="f['accountHolder'].touched && f['accountHolder'].invalid"
-              class="alert alert-danger"
-            >
-              <div
-                *ngIf="
-                  f['accountHolder'].errors &&
-                  f['accountHolder'].errors['required']
-                "
-              >
-                Account Holder is required.
-              </div>
-            </div>
           </div>
 
           <div class="mb-3">
-            <label for="iban" class="form-label">*IBAN</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="iban"
-              id="iban"
-            />
-            <!-- <div
-              *ngIf="f['iban'].touched && f['iban'].invalid"
-              class="alert alert-danger"
-            >
-              <div *ngIf="f['iban'].errors && f['iban'].errors['required']">
-                IBAN is required.
-              </div>
-            </div> -->
-          </div>
-
-          <div class="mb-3">
-            <label for="iban" class="col-sm-2 col-form-label">*IBAN 2:</label>
+            <label for="iban" class="col-sm-2 col-form-label">*IBAN:</label>
             <input
               type="text"
               class="form-control"
@@ -131,20 +116,21 @@
               formControlName="iban"
               required
             />
-          </div>
-
-          <div
-            *ngIf="f['iban'].invalid && (f['iban'].dirty || f['iban'].touched)"
-            class="alert alert-danger"
-          >
             <div
-              *ngIf="f['iban'].valid && (f['iban'].dirty || f['iban'].touched)"
+              *ngIf="
+                f['iban'].invalid &&
+                (f['iban'].dirty ||
+                  f['iban'].touched ||
+                  f['iban'].root?.submitting)
+              "
               class="alert alert-danger"
             >
-              IBAN is valid.
-            </div>
-            <div *ngIf="f['iban'].errors && f['iban'].errors['required']">
-              IBAN is required.
+              <div *ngIf="f['iban'].errors && f['iban'].errors['required']">
+                IBAN is required.
+              </div>
+              <div *ngIf="f['iban'].errors && f['iban'].errors['iban']">
+                IBAN is invalid
+              </div>
             </div>
           </div>
 
@@ -157,7 +143,12 @@
               id="date"
             />
             <div
-              *ngIf="f['date'].touched && f['date'].invalid"
+              *ngIf="
+                f['date'].invalid &&
+                (f['date'].dirty ||
+                  f['date'].touched ||
+                  f['date'].root?.submitting)
+              "
               class="alert alert-danger"
             >
               <div *ngIf="f['date'].errors && f['date'].errors['required']">
@@ -172,31 +163,52 @@
               <span class="input-group-text">&euro;</span>
               <input
                 type="text"
+                yubCurrencyMask
                 class="form-control"
+                [form]="ParentForm"
                 formControlName="amount"
-                aria-label="Amount (to the nearest euro)"
               />
-              <span class="input-group-text">.00</span>
+            </div>
+            <div
+              *ngIf="
+                f['amount'].invalid &&
+                (f['amount'].dirty ||
+                  f['amount'].touched ||
+                  f['amount'].root?.submitting)
+              "
+              class="alert alert-danger"
+            >
+              <div *ngIf="f['amount'].errors && f['amount'].errors['required']">
+                Amount is required.
+              </div>
               <div
-                *ngIf="f['amount'].touched && f['amount'].invalid"
-                class="alert alert-danger"
+                *ngIf="f['amount'].errors && f['amount'].errors['maxlength']"
               >
-                <div
-                  *ngIf="f['amount'].errors && f['amount'].errors['required']"
-                >
-                  Amount is required.
-                </div>
+                Amount must be less then 8 characters long.
+              </div>
+              <div
+                *ngIf="f['amount'].errors && f['amount'].errors['minlength']"
+              >
+                Amount must be more then 2 characters long.
               </div>
             </div>
           </div>
           <div class="mb-3">
             <label for="note" class="form-label">Note</label>
-            <input
+            <textarea
+              rows="5"
               type="string"
               class="form-control"
               formControlName="note"
               id="note"
-            />
+            >
+            </textarea>
+            <!-- <input
+              type="string"
+              class="form-control"
+              formControlName="note"
+              id="note"
+            /> -->
           </div>
         </form>
       </div>

@@ -56,15 +56,10 @@ export class UserService {
   }
 
   Remove(user: User) {
-    // return new Promise((s, e) => {
-      // this.confirmationService.confirm({
-      //   message: `Are you sure you want to remove ${user.name}?`,
-      //   accept: () => {
-      return this._httpClient.delete(`${this.GetURLPrefix()}/${user.id}`).pipe(
-        map((res: any) => {
-          return res;
-        })
-      );
-    // });
+    return this._httpClient.delete(`${this.GetURLPrefix()}/${user.id}`).pipe(
+      map((res: any) => {
+        return res;
+      })
+    );
   }
 }

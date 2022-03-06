@@ -1,1 +1,57 @@
-<p>user-table works!</p>
+<div class="container">
+    <nav class="navbar" style="width: 28em; float: right">
+        <input
+          class="form-control"
+          type="text"
+          name="searchFieldTextValue"
+          [(ngModel)]="searchFieldTextValue"
+          (ngModelChange)="Search()"
+          placeholder="Search Account Holder"
+        />
+      </nav>
+    
+      <table class="table table-striped mt-3">
+        <thead>
+          <tr>
+            <th scope="col" (click)="OnClickSort('id')">
+              ID&nbsp;<i class="fa fa-sort"></i>
+            </th>
+            <th scope="col" style="width: 20%">Account Holder</th>
+            <th scope="col" style="width: 15%">IBAN</th>
+            <th scope="col" style="width: 15%" (click)="OnClickSort('date')">
+              Date &nbsp;<i class="fa fa-sort"></i>
+            </th>
+            <th scope="col" style="width: 10%" (click)="OnClickSort('amount')">
+              Amount&nbsp;<i class="fa fa-sort"></i>
+            </th>
+            <th scope="col" style="width: 25%">Note</th>
+            <th scope="col" style="width: 14em; text-align: center">Actions</th>
+          </tr>
+        </thead>
+    
+        <tbody>
+          <tr *ngFor="let row of userList | orderBy: filterKey:reverse">
+            <td>{{ row.id }}</td>
+            <td>{{ row.accountHolder }}</td>
+            <td>{{ row.iban | ibanFormatter }}</td>
+            <td>{{ row.date }}</td>
+            <td>{{ row.amount | currency: "EUR" }}</td>
+            <td [innerText]="row.note"></td>
+            <td style="text-align: center">
+              <button
+                class="btn btn-info"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+                (click)="OnClickEdit(row)"
+              >
+                Edit
+              </button>
+              <button class="btn btn-danger mx-3" (click)="DeleteUser(row)">
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>

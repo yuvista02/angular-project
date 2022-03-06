@@ -8,12 +8,18 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { AppLayoutModule } from './app-layout/app-layout.module';
 import { DomainModule } from './domain/domain.module';
 import { HttpClientModule } from '@angular/common/http';
-import { UserListPageComponent } from './domain/user/user-list-page/user-list-page.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { SharedModule } from './shared/shared.module';
+import { AngularIbanModule } from 'angular-iban';
+import { Ng2OrderModule } from 'ng2-order-pipe';
+import { MatButtonModule } from '@angular/material/button';
+import { CurrencyMaskModule } from 'ng2-currency-mask';
 
 @NgModule({
-  declarations: [AppComponent, UserListPageComponent],
+  declarations: [
+    AppComponent,
+    // MatDialogModule,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,9 +27,9 @@ import { SharedModule } from './shared/shared.module';
     MatSidenavModule,
     AppLayoutModule,
     DomainModule,
-    HttpClientModule,
-    ReactiveFormsModule,
     SharedModule,
+    HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
