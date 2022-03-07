@@ -12,7 +12,7 @@ import { UserService } from '../../services/user.service';
 export class UserTableComponent implements OnInit {
   @Output() itemClick: EventEmitter<User> = new EventEmitter();
   @Output() reloadList: EventEmitter<User> = new EventEmitter();
-  @Input() userList: User [] = [];
+  @Input() UserList: User [] = [];
 
   public searchFieldTextValue: any;
   constructor(private dialog: MatDialog, private _userService: UserService) {}
@@ -25,7 +25,7 @@ export class UserTableComponent implements OnInit {
     if (this.searchFieldTextValue == '') {
       this.ngOnInit();
     } else {
-      this.userList = this.userList.filter((a) => {
+      this.UserList = this.UserList.filter((a) => {
         return a.accountHolder
           .toLocaleLowerCase()
           .match(this.searchFieldTextValue.toLocaleLowerCase());

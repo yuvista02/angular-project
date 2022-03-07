@@ -47,6 +47,11 @@ export class UserListPageComponent implements OnInit {
     }
   }
 
+  GoToEdit(item: User) {
+    // ToDo: Goto Edit Page
+
+  }
+
   OnClickSort(value: string) {
     this.filterKey = value;
     this.reverse = !this.reverse;

@@ -1,5 +1,5 @@
 <div class="container">
-    <nav class="navbar" style="width: 28em; float: right">
+    <nav class="navbar" style="width: 8em; float: right">
         <input
           class="form-control"
           type="text"
@@ -30,7 +30,7 @@
         </thead>
     
         <tbody>
-          <tr *ngFor="let row of userList | orderBy: filterKey:reverse">
+          <tr *ngFor="let row of UserList | orderBy: filterKey:reverse">
             <td>{{ row.id }}</td>
             <td>{{ row.accountHolder }}</td>
             <td>{{ row.iban | ibanFormatter }}</td>

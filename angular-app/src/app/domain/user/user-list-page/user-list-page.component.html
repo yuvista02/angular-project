@@ -1,22 +1,20 @@
-<nav class="navbar navbar-light bg-primary">
-  <div class="container-fluid">
-    <h1 style="color: aliceblue">User CRUD Operation</h1>
+<div class="border" style="padding: 10px; margin: 10px; border-radius: 10px">
+  <div style="float: left; margin: 15px 0px 0px 5px">
+    <h1 style="font-size: 200">Users</h1>
   </div>
-</nav>
+  <div style="float: right; margin: 8px 10px 0px 10px">
+    <button
+      type="button"
+      class="btn btn-success"
+      data-bs-toggle="modal"
+      data-bs-target="#staticBackdrop"
+      (click)="OnClickCreate()"
+    >
+      Create
+    </button>
+  </div>
 
-<div style="float: right; margin: 28px 10px 0px 10px">
-  <button
-    type="button"
-    class="btn btn-success"
-    data-bs-toggle="modal"
-    data-bs-target="#staticBackdrop"
-    (click)="OnClickCreate()"
-  >
-    Create
-  </button>
-</div>
-<div style="padding: 20px">
-  <nav class="navbar" style="width: 28em; float: right">
+  <nav class="navbar" style="width: 20em; float: right">
     <input
       class="form-control"
       type="text"
@@ -27,50 +25,60 @@
     />
   </nav>
 
-  <table class="table table-striped mt-3">
-    <thead>
-      <tr>
-        <th scope="col" (click)="OnClickSort('id')">
-          ID&nbsp;<i class="fa fa-sort"></i>
-        </th>
-        <th scope="col" style="width: 20%">Account Holder</th>
-        <th scope="col" style="width: 15%">IBAN</th>
-        <th scope="col" style="width: 15%" (click)="OnClickSort('date')">
-          Date &nbsp;<i class="fa fa-sort"></i>
-        </th>
-        <th scope="col" style="width: 10%" (click)="OnClickSort('amount')">
-          Amount&nbsp;<i class="fa fa-sort"></i>
-        </th>
-        <th scope="col" style="width: 25%">Note</th>
-        <th scope="col" style="width: 14em; text-align: center">Actions</th>
-      </tr>
-    </thead>
+  <!-- <app-user-table   
+  [UserList]="userList"
+  (itemClick)="GoToEdit($event)"></app-user-table> -->
 
-    <tbody>
-      <tr *ngFor="let row of userList | orderBy: filterKey:reverse">
-        <td>{{ row.id }}</td>
-        <td>{{ row.accountHolder }}</td>
-        <td>{{ row.iban | ibanFormatter }}</td>
-        <td>{{ row.date }}</td>
-        <td>{{ row.amount | currency: "EUR" }}</td>
-        <td [innerText]="row.note"></td>
-        <td style="text-align: center">
-          <button
-            class="btn btn-info"
-            class="btn btn-primary"
-            data-bs-toggle="modal"
-            data-bs-target="#staticBackdrop"
-            (click)="OnClickEdit(row)"
-          >
-            Edit
-          </button>
-          <button class="btn btn-danger mx-3" (click)="DeleteUser(row)">
-            Delete
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="border" style="margin: 60px 0px 0px 0px; padding: 10px">
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th scope="col" (click)="OnClickSort('id')">
+            ID&nbsp;<i class="fa fa-sort"></i>
+          </th>
+          <th scope="col" style="width: 20%">Account Holder</th>
+          <th scope="col" style="width: 15%">IBAN</th>
+          <th scope="col" style="width: 15%" (click)="OnClickSort('date')">
+            Date &nbsp;<i class="fa fa-sort"></i>
+          </th>
+          <th scope="col" style="width: 10%" (click)="OnClickSort('amount')">
+            Amount&nbsp;<i class="fa fa-sort"></i>
+          </th>
+          <th scope="col" style="width: 25%">Note</th>
+          <th scope="col" style="width: 14em; text-align: center">Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let row of userList | orderBy: filterKey:reverse">
+          <td>{{ row.id }}</td>
+          <td>{{ row.accountHolder }}</td>
+          <td>{{ row.iban | ibanFormatter }}</td>
+          <td>{{ row.date }}</td>
+          <td>{{ row.amount | currency: "EUR" }}</td>
+          <td [innerText]="row.note"></td>
+          <td style="text-align: center">
+            <button
+              class="btn btn-info"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#staticBackdrop"
+              (click)="OnClickEdit(row)"
+            >
+              Edit
+            </button>
+            <button class="btn btn-danger mx-3" (click)="DeleteUser(row)">
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="text-align: right">
+    Number Of Items:
+    {{ userList.length }}
+  </div>
 </div>
 
 <!-- Modal -->
@@ -203,12 +211,6 @@
               id="note"
             >
             </textarea>
-            <!-- <input
-              type="string"
-              class="form-control"
-              formControlName="note"
-              id="note"
-            /> -->
           </div>
         </form>
       </div>
