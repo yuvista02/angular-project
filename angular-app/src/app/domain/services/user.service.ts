@@ -9,6 +9,8 @@ import { User } from '../models/user.model';
 export class UserService {
   private userList$!: ReplaySubject<any>;
 
+  public currentUserID!: number;
+  
   constructor(private _httpClient: HttpClient) {}
 
   protected GetURLPrefix(): string {
