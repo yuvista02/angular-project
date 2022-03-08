@@ -9,3 +9,14 @@ Creating Angular Project
 4. cmd to create project : ng new project-name
 5. Open project from vs code
 6. bootstrap setup
+
+Steps to the local server
+1. Open terminal from your project
+2. Run npm i -g json-server - it download the required package for running local server
+	and create a json file db.json which store the ARRAY OF Object 
+3. Run server: json-server --watch db.json
+
+Third Party Libraries
+1. Bootstrap
+3. Material component
+2. CurrencyMask
