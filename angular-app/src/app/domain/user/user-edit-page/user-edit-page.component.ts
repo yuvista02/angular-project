@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';
+import { Component, Inject, OnInit }      from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA }  from '@angular/material/dialog';
+import { User }                           from 'src/app/domain/models/user.model';
 
 @Component({
   selector: 'app-user-edit-page',
@@ -10,15 +10,18 @@ import { UserService } from '../../services/user.service';
 export class UserEditPageComponent implements OnInit {
   public UserData: User[] = [];
   public ID!: number;
-  constructor(private _userService: UserService) {}
+  public Loading: boolean = false;
+
+  constructor(
+    public dialogRef: MatDialogRef<UserEditPageComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {}
 
   ngOnInit(): void {
-    this.getList();
+    this.ID = this.data.id;
   }
 
-  private getList() {
-    this._userService.GetById(this.ID).subscribe((res) => {
-      this.UserData = res;
-    });
+  OnClickClose() {
+    this.dialogRef.close();
   }
 }

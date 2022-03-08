@@ -1,37 +1,26 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
-import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';
+import { MatDialog }                      from '@angular/material/dialog';
+import { ConfirmationDialogComponent }    from 'src/app/shared/components/confirmation-dialog/confirmation-dialog.component';
+import { User }                           from 'src/app/domain/models/user.model';
+import { UserService }                    from 'src/app/domain/services/user.service';
+import { UserEditPageComponent }          from 'src/app/domain/user/user-edit-page/user-edit-page.component';
 
 @Component({
   selector: 'app-user-table',
   templateUrl: './user-table.component.html',
   styleUrls: ['./user-table.component.css'],
+  providers: [MatDialog],
 })
 export class UserTableComponent implements OnInit {
-  @Output() itemClick: EventEmitter<User> = new EventEmitter();
   @Output() reloadList: EventEmitter<User> = new EventEmitter();
-  @Input() UserList: User [] = [];
+  @Input() UserList: User[] = [];
 
-  public searchFieldTextValue: any;
-  constructor(private dialog: MatDialog, private _userService: UserService) {}
-
-  ngOnInit(): void {}
   public filterKey!: string;
   public reverse: boolean = false;
 
-  public Search() {
-    if (this.searchFieldTextValue == '') {
-      this.ngOnInit();
-    } else {
-      this.UserList = this.UserList.filter((a) => {
-        return a.accountHolder
-          .toLocaleLowerCase()
-          .match(this.searchFieldTextValue.toLocaleLowerCase());
-      });
-    }
-  }
+  constructor(private dialog: MatDialog, private _userService: UserService) {}
+
+  ngOnInit(): void {}
 
   OnClickSort(value: string) {
     this.filterKey = value;
@@ -39,7 +28,14 @@ export class UserTableComponent implements OnInit {
   }
 
   public OnClickEdit(row: User) {
-    this.itemClick.emit(row);
+    const dialogRef = this.dialog.open(UserEditPageComponent, {
+      width: '500px',
+      data: { id: row.id },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      this.reloadList.emit();
+    });
   }
 
   public DeleteUser(user: User) {

@@ -1,9 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { ValidatorService } from 'angular-iban';
-import { User } from '../../models/user.model';
-import { UserService } from '../../services/user.service';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder, Validators }        from '@angular/forms';
+import { ValidatorService }               from 'angular-iban';
+import { User }                           from 'src/app/domain/models/user.model';
+import { UserService }                    from 'src/app/domain/services/user.service';
 
 @Component({
   selector: 'app-user-form',
@@ -13,6 +12,7 @@ import { UserService } from '../../services/user.service';
 export class UserFormComponent implements OnInit {
   @Input() public ID!: number;
   @Input() public UserData: User[] = [];
+  @Output() private OnClickCloseBtn: EventEmitter<User> = new EventEmitter();
 
   public ParentForm!: any;
   public userModelObj: User = new User();
@@ -20,12 +20,26 @@ export class UserFormComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _userService: UserService,
-    private dialog: MatDialog
+    private _userService: UserService
   ) {}
 
   ngOnInit(): void {
-    this.doInitializeFormControls();
+    this.initializeComponent();
+  }
+
+  private initializeComponent() {
+    if (this.ID) {
+      this.getList();
+    } else {
+      this.doInitializeFormControls();
+    }
+  }
+
+  private getList() {
+    this._userService.GetById(this.ID).subscribe((res) => {
+      this.UserData = res;
+      this.doInitializeFormControls();
+    });
   }
 
   private doInitializeFormControls() {
@@ -42,10 +56,6 @@ export class UserFormComponent implements OnInit {
     this.ParentForm.patchValue(this.UserData);
   }
 
-  get f() {
-    return this.ParentForm.controls;
-  }
-
   public Save() {
     if (!this.ParentForm.valid) {
       this.ParentForm.submitting = true;
@@ -59,12 +69,8 @@ export class UserFormComponent implements OnInit {
     ).subscribe(
       (res) => {
         alert('Operation Successful.');
-
-        let ref = document.getElementById('cancel');
-        ref?.click();
-
         this.ParentForm.reset();
-        // this.getList();
+        this.OnClickCloseBtn.emit();
       },
       (err) => alert('Something went wrong')
     );
@@ -72,10 +78,15 @@ export class UserFormComponent implements OnInit {
 
   public OnClickCancel() {
     this.resetForm();
+    this.OnClickCloseBtn.emit();
   }
 
   private resetForm() {
     this.ID = 0;
     this.ParentForm.reset();
+  }
+
+  get f() {
+    return this.ParentForm.controls;
   }
 }

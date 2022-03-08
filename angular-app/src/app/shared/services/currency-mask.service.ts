@@ -2,12 +2,10 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CurrencyMaskService {
-  private prefix: string;
   private decimalSeparator: string;
   private thousandsSeparator: string;
 
   constructor() {
-    this.prefix = '$';
     this.decimalSeparator = '.';
     this.thousandsSeparator = ',';
   }
@@ -19,11 +17,6 @@ export class CurrencyMaskService {
     decimalPrecision: number = 2
   ) {
     let intFraction: string = '';
-    if (type == 'number') {
-      this.prefix = '';
-    } else {
-      this.prefix = '$';
-    }
 
     if (value === undefined || value === '') {
       return null;

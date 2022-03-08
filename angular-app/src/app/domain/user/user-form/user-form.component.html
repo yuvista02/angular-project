@@ -1,151 +1,117 @@
-<!-- Modal -->
-<div
-  class="modal fade"
-  id="staticBackdrop"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title" id="staticBackdropLabel">Client Details</h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <form [formGroup]="ParentForm" (ngSubmit)="Save()">
-          <div class="mb-3">
-            <label for="accountHolder" class="form-label">Account Holder</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="accountHolder"
-              id="accountHolder"
-            />
-          </div>
+<div class="modal-body" *ngIf="ParentForm">
+  <form [formGroup]="ParentForm" (ngSubmit)="Save()">
+    <div class="mb-3">
+      <label for="accountHolder" class="form-label">Account Holder</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="accountHolder"
+        id="accountHolder"
+      />
+    </div>
 
-          <div class="mb-3">
-            <label for="iban" class="col-sm-2 col-form-label">*IBAN:</label>
-            <input
-              type="text"
-              class="form-control"
-              id="iban"
-              name="iban"
-              formControlName="iban"
-              required
-            />
-            <div
-              *ngIf="
-                f['iban'].invalid &&
-                (f['iban'].dirty ||
-                  f['iban'].touched ||
-                  f['iban'].root?.submitting)
-              "
-              class="alert alert-danger"
-            >
-              <div *ngIf="f['iban'].errors && f['iban'].errors['required']">
-                IBAN is required.
-              </div>
-              <div *ngIf="f['iban'].errors && f['iban'].errors['iban']">
-                IBAN is invalid
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="date" class="form-label">*Date</label>
-            <input
-              type="date"
-              class="form-control"
-              formControlName="date"
-              id="date"
-            />
-            <div
-              *ngIf="
-                f['date'].invalid &&
-                (f['date'].dirty ||
-                  f['date'].touched ||
-                  f['date'].root?.submitting)
-              "
-              class="alert alert-danger"
-            >
-              <div *ngIf="f['date'].errors && f['date'].errors['required']">
-                date is required.
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-3">
-            <label for="amount" class="form-label">*Amount</label>
-            <div class="input-group mb-3">
-              <span class="input-group-text">&euro;</span>
-              <input
-                type="text"
-                yubCurrencyMask
-                class="form-control"
-                [form]="ParentForm"
-                formControlName="amount"
-              />
-            </div>
-            <div
-              *ngIf="
-                f['amount'].invalid &&
-                (f['amount'].dirty ||
-                  f['amount'].touched ||
-                  f['amount'].root?.submitting)
-              "
-              class="alert alert-danger"
-            >
-              <div *ngIf="f['amount'].errors && f['amount'].errors['required']">
-                Amount is required.
-              </div>
-              <div
-                *ngIf="f['amount'].errors && f['amount'].errors['maxlength']"
-              >
-                Amount must be less then 8 characters long.
-              </div>
-              <div
-                *ngIf="f['amount'].errors && f['amount'].errors['minlength']"
-              >
-                Amount must be more then 2 characters long.
-              </div>
-            </div>
-          </div>
-          <div class="mb-3">
-            <label for="note" class="form-label">Note</label>
-            <textarea
-              rows="5"
-              type="string"
-              class="form-control"
-              formControlName="note"
-              id="note"
-            >
-            </textarea>
-          </div>
-        </form>
-      </div>
-
-      <div class="modal-footer">
-        <button
-          type="button"
-          id="cancel"
-          class="btn btn-secondary"
-          data-bs-dismiss="modal"
-          (click)="OnClickCancel()"
-        >
-          Cancel
-        </button>
-        <button type="submit" class="btn btn-primary" (click)="Save()">
-          Save
-        </button>
+    <div class="mb-3">
+      <label for="iban" class="col-sm-2 col-form-label">*IBAN:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="iban"
+        name="iban"
+        formControlName="iban"
+        required
+      />
+      <div
+        *ngIf="
+          f['iban'].invalid &&
+          (f['iban'].dirty || f['iban'].touched || f['iban'].root?.submitting)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="f['iban'].errors && f['iban'].errors['required']">
+          IBAN is required.
+        </div>
+        <div *ngIf="f['iban'].errors && f['iban'].errors['iban']">
+          IBAN is invalid
+        </div>
       </div>
     </div>
-  </div>
+
+    <div class="mb-3">
+      <label for="date" class="form-label">*Date</label>
+      <input
+        type="date"
+        class="form-control"
+        formControlName="date"
+        id="date"
+      />
+      <div
+        *ngIf="
+          f['date'].invalid &&
+          (f['date'].dirty || f['date'].touched || f['date'].root?.submitting)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="f['date'].errors && f['date'].errors['required']">
+          date is required.
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="amount" class="form-label">*Amount</label>
+      <div class="input-group mb-3">
+        <span class="input-group-text">&euro;</span>
+        <input
+          type="text"
+          yubCurrencyMask
+          class="form-control"
+          [form]="ParentForm"
+          formControlName="amount"
+        />
+      </div>
+      <div
+        *ngIf="
+          f['amount'].invalid &&
+          (f['amount'].dirty ||
+            f['amount'].touched ||
+            f['amount'].root?.submitting)
+        "
+        class="alert alert-danger"
+      >
+        <div *ngIf="f['amount'].errors && f['amount'].errors['required']">
+          Amount is required.
+        </div>
+        <div *ngIf="f['amount'].errors && f['amount'].errors['maxlength']">
+          Amount must be less then 8 characters long.
+        </div>
+        <div *ngIf="f['amount'].errors && f['amount'].errors['minlength']">
+          Amount must be more then 2 characters long.
+        </div>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="note" class="form-label">Note</label>
+      <textarea
+        rows="5"
+        type="string"
+        class="form-control"
+        formControlName="note"
+        id="note"
+      >
+      </textarea>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button
+    type="button"
+    id="cancel"
+    class="btn btn-secondary"
+    data-bs-dismiss="modal"
+    (click)="OnClickCancel()"
+  >
+    Cancel
+  </button>
+  <button type="submit" class="btn btn-primary" (click)="Save()">Save</button>
 </div>

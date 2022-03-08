@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SharedModule } from '../shared/shared.module';
-import { UserModule } from './user/user.module';
+import { NgModule }       from '@angular/core';
+import { CommonModule }   from '@angular/common';
+
+import { UserModule }     from 'src/app/domain/user/user.module';
+import { SharedModule }   from 'src/app/shared/shared.module';
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [CommonModule, SharedModule, UserModule],
 })
 export class DomainModule {}
