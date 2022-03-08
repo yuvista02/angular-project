@@ -1,0 +1,25 @@
+.main-div {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.page-title {
+  float: left;
+  margin: 15px 0px 0px 20px;
+}
+
+.page-title-h1 {
+  font-size: 200;
+}
+
+.div-table {
+  margin: 50px 0px 0px 0px;
+  padding: 10px;
+}
+
+.div-list-count {
+  margin: 0px 10px 0px 0px;
+  text-align: right;
+  font-weight: 500;
+}

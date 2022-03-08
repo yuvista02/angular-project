@@ -15,6 +15,8 @@ export class UserListPageComponent implements OnInit {
   public UserList: User[] = [];
   public SearchFieldTextValue: any;
 
+  public Loading:boolean = true;
+
   constructor(private _userService: UserService, private dialog: MatDialog) {}
 
   ngOnInit(): void {
@@ -22,8 +24,10 @@ export class UserListPageComponent implements OnInit {
   }
 
   private getList() {
+    this.Loading = true;
     this._userService.GetList().subscribe((res) => {
       this.UserList = res;
+      this.Loading = false;
     });
   }
 
@@ -37,17 +41,6 @@ export class UserListPageComponent implements OnInit {
           .match(this.SearchFieldTextValue.toLocaleLowerCase());
       });
     }
-  }
-
-  public OnClickBtnCreate() {
-    const dialogRef = this.dialog.open(UserEditPageComponent, {
-      width: '500px',
-      data: { id: null },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      this.getList();
-    });
   }
 
   public ReloadList() {

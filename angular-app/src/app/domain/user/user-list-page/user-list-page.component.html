@@ -1,37 +1,15 @@
-<div class="border" style="padding: 10px; margin: 10px; border-radius: 10px">
-  <div style="float: left; margin: 15px 0px 0px 20px">
-    <h1 style="font-size: 200">Users</h1>
+<div class="border main-div">
+  <div class="page-title">
+    <h1 class="page-title-h1">Users</h1>
   </div>
-  <div style="float: right; margin: 8px 10px 0px 10px">
-    <button
-      type="button"
-      class="btn btn-success"
-      data-bs-toggle="modal"
-      data-bs-target="#staticBackdrop"
-      (click)="OnClickBtnCreate()"
-    >
-      Create
-    </button>
-  </div>
-
-  <nav class="navbar" style="width: 20em; float: right">
-    <input
-      class="form-control"
-      type="text"
-      name="SearchFieldTextValue"
-      [(ngModel)]="SearchFieldTextValue"
-      (ngModelChange)="Search()"
-      placeholder="Search Account Holder"
-    />
-  </nav>
-
-  <div class="border" style="margin: 60px 0px 0px 0px; padding: 10px">
+  <div class="div-table">
     <app-user-table
+      *ngIf="!Loading"
       [UserList]="UserList"
       (reloadList)="ReloadList()"
     ></app-user-table>
   </div>
-  <div style="margin: -20px 10px 0px 0px; text-align: right">
+  <div class="div-list-count">
     Number Of Items:
     {{ UserList.length }}
   </div>

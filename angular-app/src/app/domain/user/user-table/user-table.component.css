@@ -1,0 +1,54 @@
+.table-action-nav {
+  float: right;
+  margin-top: -65px;
+}
+.search-text {
+  height: 5em;
+  float: right;
+}
+
+.my-table {
+  width: 100%;
+}
+
+.tr-header {
+  line-height: 3em;
+}
+.tr-body {
+  line-height: 3.5em;
+}
+
+.th-account-holder {
+  width: 20%;
+  font-size: medium;
+}
+.th-iban {
+  width: 17%;
+  font-size: medium;
+}
+.th-date {
+  width: 9%;
+  font-size: medium;
+}
+.th-amount {
+  width: 10%;
+  font-size: medium;
+}
+.th-note {
+  width: 25%;
+  font-size: medium;
+}
+.th-actions {
+  width: 15em;
+  font-size: medium;
+  text-align: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.div-btn-create {
+  float: right;
+  margin: 8px 10px 0px 10px;
+}
